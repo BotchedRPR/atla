@@ -70,6 +70,7 @@ namespace Heimdall
 		void PrintFullInfo(void);
 
 		void PrintDeviceDetectionFailed(void);
+		void PrintDeviceDetectionInProgress(int);
 
 		void PrintPit(const libpit::PitData *pitData);
 

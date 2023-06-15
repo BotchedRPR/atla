@@ -25,13 +25,19 @@
 #include "Heimdall.h"
 #include "Interface.h"
 
+//platform-specific for timeout.
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
 using namespace std;
 using namespace Heimdall;
 
 const char *DetectAction::usage = "Action: detect\n\
 Arguments: [--verbose] [--stdout-errors]\n\
            [--usb-log-level <none/error/warning/debug>]\n\
-Description: Indicates whether or not a download mode device can be detected.\n";
+Description: Continuously checks for device in download-mode and stops when detected.\n";
 
 int DetectAction::Execute(int argc, char **argv)
 {
@@ -97,6 +103,16 @@ int DetectAction::Execute(int argc, char **argv)
 	bridgeManager->SetUsbLogLevel(usbLogLevel);
 
 	bool detected = bridgeManager->DetectDevice();
+	
+	int detectionRetries = 0;
+
+	while(!detected)
+	{
+		Interface::PrintDeviceDetectionInProgress(detectionRetries);
+		detected = bridgeManager->DetectDevice();
+		sleep(1);
+		detectionRetries++;
+	}
 
 	delete bridgeManager;
 

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.4)
 
-project(heimdall)
+project(atla)
 
 if((NOT ${CMAKE_SYSTEM_NAME} MATCHES "Linux") AND (NOT DEFINED libusb_USE_STATIC_LIBS))
     set(libusb_USE_STATIC_LIBS YES)
@@ -41,12 +41,12 @@ set(HEIMDALL_SOURCE_FILES
     source/VersionAction.cpp)
 
 include(LargeFiles)
-use_large_files(heimdall YES)
-add_executable(heimdall ${HEIMDALL_SOURCE_FILES})
+use_large_files(atla YES)
+add_executable(atla ${HEIMDALL_SOURCE_FILES})
 
-target_link_libraries(heimdall PRIVATE pit)
-target_link_libraries(heimdall PRIVATE ${LIBUSB_LIBRARY})
-install (TARGETS heimdall
+target_link_libraries(atla PRIVATE pit)
+target_link_libraries(atla PRIVATE ${LIBUSB_LIBRARY})
+install (TARGETS atla
 		RUNTIME	DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
 		LIBRARY	DESTINATION ${CMAKE_INSTALL_LIBDIR})
 

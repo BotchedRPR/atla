@@ -42,15 +42,12 @@ using namespace Heimdall;
 map<string, Interface::ActionInfo> actionMap;
 bool stdoutErrors = false;
 		
-const char *version = "v1.4.2";
-const char *actionUsage = "Usage: heimdall <action> <action arguments>\n";
+const char *version = "v1.0.0";
+const char *actionUsage = "Usage: atla <action> <action arguments>\n";
 
-const char *releaseInfo = "Heimdall %s\n\n\
-Copyright (c) 2010-2017 Benjamin Dobell, Glass Echidna\n\
-http://www.glassechidna.com.au/\n\n\
-This software is provided free of charge. Copying and redistribution is\nencouraged.\n\n\
-If you appreciate this software and you would like to support future\ndevelopment please consider donating:\n\
-http://www.glassechidna.com.au/donate/\n\n";
+
+const char *releaseInfo = "Atla - an easier Samsung flashing tool %s\n\n\
+Atla is based on Heimdall. Heimdall - Copyright (c) 2010-2017 Benjamin Dobell, Glass Echidna\n";
 
 static const char *extraInfo = "Heimdall utilises libusbx for all USB communication:\n\
     http://www.libusb.org/\n\
@@ -202,9 +199,14 @@ void Interface::PrintFullInfo(void)
 
 void Interface::PrintDeviceDetectionFailed(void)
 {
-	Interface::PrintError("Failed to detect compatible download-mode device.\n");
+	//Deprecated for PrintDeviceDetectionInProgress
+	//Interface::PrintError("No device detected. Retrying...\n");
 }
 
+void Interface::PrintDeviceDetectionInProgress(int retries)
+{
+	Interface::Print("Detecting device... Retry: %i\n", retries);
+}
 void Interface::PrintPit(const PitData *pitData)
 {
 	Interface::Print("Entry Count: %d\n", pitData->GetEntryCount());

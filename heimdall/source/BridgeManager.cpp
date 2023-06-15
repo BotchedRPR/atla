@@ -486,8 +486,12 @@ int BridgeManager::Initialise(bool resume)
 	
 	result = FindDeviceInterface();
 
-	if (result != BridgeManager::kInitialiseSucceeded)
-		return (result);
+	while(result != BridgeManager::kInitialiseSucceeded)
+	{
+		Interface::Print("No device for interface found. Retrying...\n\n");
+		Sleep(1500); //Because the bridge manager initialise function takes around 1.5s to enumerate USBs
+		result = FindDeviceInterface();
+	}
 
 	if (!ClaimDeviceInterface())
 		return (BridgeManager::kInitialiseFailed);
